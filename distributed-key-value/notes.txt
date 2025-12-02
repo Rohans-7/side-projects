@@ -1,0 +1,3 @@
+// Notes : 
+// socket - endpoint between application layer and transport
+// identified using IP + port

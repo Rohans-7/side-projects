@@ -15,4 +15,9 @@ public class Server {
             })
         }
     }
+    public static void handleClient(Socket socket){
+        try{
+            
+        }
+    }
 }
