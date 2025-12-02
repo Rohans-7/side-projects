@@ -1,3 +1,5 @@
 // Notes : 
 // socket - endpoint between application layer and transport
 // identified using IP + port
+// on socket you receive data in bytes you need to convert it
+// into characters -> that's why InputStreamReader
