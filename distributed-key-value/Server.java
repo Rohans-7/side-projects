@@ -36,9 +36,25 @@ public class Server {
                         Integer val = keyValueStore.get(key);
                         pw.println(val == null ? "NULL" : val);
                         break;
+                    
+                    case "DELETE":
+                        key = Integer.parseInt(parts[1]);
+                        keyValueStore.remove(key);
+                        pw.println("Deleted");
+                        break;
+                    case "EXIT":
+                        pw.println("Goodbye!");
+                        socket.close();
+                        return;
+
+                    default:
+                        pw.println("Unknown command");
+                        break;
                 }
-                pw.println(response);
             }
+        }
+        catch(Exception e){
+            e.printStackTrace();
         }
     }
 
