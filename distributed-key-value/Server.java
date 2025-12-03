@@ -1,18 +1,29 @@
 import java.io.*;
 import java.net.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
 public class Server {
-    private static ConcurrentHashMap<Integer, Integer> keyValueStore = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<Integer, Integer> keyValueStore = new ConcurrentHashMap<>();
     public static void main(String[] args){
+        ExecutorService executor = Executors.newFixedThreadPool(10);
         System.out.println("Server is running...");
-        ServerSocket serverSocket = new ServerSocket(5000);
-        ExecutorService service = Executors.newFixedThreadPool(10);
-        System.out.println("KV store started on port 5000");
-        while(true){
-            Socket clientSocket = serverSocket.accept();
-            service.submit(()->{
-                handleClient(clientSocket);
-            })
+        
+        try(ServerSocket serverSocket = new ServerSocket(5000)){
+            System.out.println("Listening on port 5000");
+            while(true){
+                Socket clientSocket = serverSocket.accept();
+                executor.submit(()->{
+                    handleClient(clientSocket);
+                });
+            }
+        }
+        catch(IOException e){
+            System.err.println("Could not start server: " + e.getMessage());
+            e.printStackTrace();
+        }
+        finally{
+            executor.shutdown();    
         }
     }
     public static void handleClient(Socket socket){
@@ -36,7 +47,7 @@ public class Server {
                         Integer val = keyValueStore.get(key);
                         pw.println(val == null ? "NULL" : val);
                         break;
-                    
+
                     case "DELETE":
                         key = Integer.parseInt(parts[1]);
                         keyValueStore.remove(key);
