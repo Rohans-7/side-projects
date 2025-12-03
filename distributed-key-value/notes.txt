@@ -3,3 +3,8 @@
 // identified using IP + port
 // on socket you receive data in bytes you need to convert it
 // into characters -> that's why InputStreamReader
+// when creating socket, handle checked exceptions.
+// Till this the application logic was simple.
+// Next target : 
+// 1. Making application more interactive.
+// 2. Creating monolithic first and then distributed.
