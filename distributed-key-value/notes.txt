@@ -6,5 +6,6 @@
 // when creating socket, handle checked exceptions.
 // Till this the application logic was simple.
 // Next target : 
-// 1. Making application more interactive.
+// 1. Making application more interactive.✅
 // 2. Creating monolithic first and then distributed.
+
